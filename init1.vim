@@ -1,7 +1,7 @@
+
 syntax on
 
 set guicursor=
-set noshowmatch
 set relativenumber
 set nohlsearch
 set hidden
@@ -21,7 +21,7 @@ set incsearch
 set termguicolors
 set scrolloff=8
 set noshowmode
-set clipboard=unnamed
+set clipboard=unnamedplus
 " Give more space for displaying messages.
 set cmdheight=2
 
@@ -45,26 +45,37 @@ Plug 'mbbill/undotree'
 Plug 'sheerun/vim-polyglot'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'stsewd/fzf-checkout.vim'
 Plug 'vuciv/vim-bujo'
 Plug 'tpope/vim-dispatch'
+"Maven
+Plug 'mikelue/vim-maven-plugin'
+"lsp
 
 "  I AM SO SORRY FOR DOING COLOR SCHEMES IN MY VIMRC, BUT I HAVE
 "  TOOOOOOOOOOOOO
+Plug 'colepeters/spacemacs-theme.vim'
 Plug 'gruvbox-community/gruvbox'
 Plug 'sainnhe/gruvbox-material'
 Plug 'phanviet/vim-monokai-pro'
 Plug 'vim-airline/vim-airline'
 Plug 'flazz/vim-colorschemes'
-Plug '/home/mpaulson/personal/vim-be-good'
+
 
 call plug#end()
+
 
 let g:gruvbox_contrast_dark = 'hard'
 if exists('+termguicolors')
     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
+
 let g:gruvbox_invert_selection='0'
+"html
+let g:coc_filetype_map = {
+  \ 'xhtml': 'html',
+  \ }
 
 " --- vim go (polyglot) settings.
 let g:go_highlight_build_constraints = 1
@@ -82,9 +93,35 @@ let g:go_highlight_format_strings = 1
 let g:go_highlight_variable_declarations = 1
 let g:go_auto_sameids = 1
 let g:python_highlight_all = 1
+
 colorscheme gruvbox
 set background=dark
 
+let g:fzf_layout = {'window': { 'width':0.8, 'height':0.8}}
+let $FZF_DEFAULT_OPTS='--reverse'
+let g:fzf_branch_actions = {
+      \ 'rebase': {
+      \   'prompt': 'Rebase> ',
+      \   'execute': 'echo system("{git} rebase {branch}")',
+      \   'multiple': v:false,
+      \   'keymap': 'ctrl-r',
+      \   'required': ['branch'],
+      \   'confirm': v:false,
+      \ },
+      \ 'track': {
+      \   'prompt': 'Track> ',
+      \   'execute': 'echo system("{git} checkout --track {branch}")',
+      \   'multiple': v:false,
+      \   'keymap': 'ctrl-t',
+      \   'required': ['branch'],
+      \   'confirm': v:false,
+      \ },
+      \}
+nnoremap <leader>gc :GBranches<CR>
+nnoremap <leader>ga :Git fetch --all<CR>
+nnoremap <leader>grum :Git rebase upstream/master<CR>
+nnoremap <leader>grom :Git rebase origin/master<CR>
+nnoremap <leader>ghw :h <C-R>=expand("<cword>")<CR><CR>
 "kite
 let g:kite_auto_complete=1
 let g:kite_tab_complete=1
@@ -121,6 +158,7 @@ inoremap ( ()<ESC>hli
 inoremap { {}<ESC>hli
 inoremap [ []<ESC>hli
 inoremap " ""<ESC>hli
+inoremap ' ''<ESC>hli
 
 nnoremap <leader>w :w<cr>
 nnoremap <leader>wq :wq<cr>
@@ -155,7 +193,7 @@ let g:bujo#todo_file_path = $HOME . "/.cache/bujo"
 
 " Vim with me
 nnoremap <leader>vwm :colorscheme gruvbox<bar>:set background=dark<CR>
-nmap <leader>vtm :highlight Pmenu ctermbg=gray guibg=gray
+nmap <leader>vtm :highlight Pmenu ctermbg=blue guibg=blue
 
 vnoremap X "_d
 inoremap <C-c> <esc>
@@ -196,8 +234,8 @@ nnoremap <silent> bn :bnext<cr>
 nnoremap <silent> Bf :bfirst<cr>
 nnoremap <silent> Bl :blast<cr>
 " Sweet Sweet FuGITive
-nmap <leader>gh :diffget //3<CR>
-nmap <leader>gu :diffget //2<CR>
+nmap <leader>gj :diffget //3<CR>
+nmap <leader>gf :diffget //2<CR>
 nmap <leader>gs :G<CR>
 
 fun! TrimWhitespace()
@@ -216,9 +254,6 @@ autocmd BufWritePre * :call TrimWhitespace()
 "coc_snippet
 " Use <C-l> for trigger snippet expand.
 imap <C-l> <Plug>(coc-snippets-expand)
-
-" Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
 
 " Use <C-j> for jump to next placeholder, it's default of coc.nvim
 let g:coc_snippet_next = '<c-j>'
