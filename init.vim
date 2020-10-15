@@ -11,7 +11,7 @@ set shiftwidth=4
 set expandtab
 set smartindent
 set nu
-set nowrap
+set wrap
 set smartcase
 set noswapfile
 set nobackup
@@ -33,6 +33,9 @@ set updatetime=50
 set shortmess+=c
 
 set colorcolumn=80
+
+"set completeopt=menuone,noinsert,noselect
+"let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 call plug#begin('~/.config/nvim/plugged')
@@ -48,9 +51,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'stsewd/fzf-checkout.vim'
 Plug 'vuciv/vim-bujo'
 Plug 'tpope/vim-dispatch'
-"Maven
-Plug 'mikelue/vim-maven-plugin'
-"lsp
+Plug 'preservim/nerdtree'
 
 "  I AM SO SORRY FOR DOING COLOR SCHEMES IN MY VIMRC, BUT I HAVE
 "  TOOOOOOOOOOOOO
@@ -64,7 +65,6 @@ Plug 'flazz/vim-colorschemes'
 
 call plug#end()
 
-
 let g:gruvbox_contrast_dark = 'hard'
 if exists('+termguicolors')
     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
@@ -76,6 +76,7 @@ let g:gruvbox_invert_selection='0'
 let g:coc_filetype_map = {
   \ 'xhtml': 'html',
   \ }
+"lua require'nvim_lsp'.html.setup{on_attach=require'completion'.on_attach}
 
 " --- vim go (polyglot) settings.
 let g:go_highlight_build_constraints = 1
@@ -93,6 +94,14 @@ let g:go_highlight_format_strings = 1
 let g:go_highlight_variable_declarations = 1
 let g:go_auto_sameids = 1
 let g:python_highlight_all = 1
+
+"nerdtree
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+map <C-m> :NERDTreeToggle<CR>
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
 
 colorscheme gruvbox
 set background=dark
@@ -117,14 +126,13 @@ let g:fzf_branch_actions = {
       \   'confirm': v:false,
       \ },
       \}
-nnoremap <leader>gc :GBranches<CR>
+nnoremap <C-b> :GBranches<CR>
+nnoremap <leader>cc :Gcommit<CR>
 nnoremap <leader>ga :Git fetch --all<CR>
 nnoremap <leader>grum :Git rebase upstream/master<CR>
 nnoremap <leader>grom :Git rebase origin/master<CR>
 nnoremap <leader>ghw :h <C-R>=expand("<cword>")<CR><CR>
 "kite
-let g:kite_auto_complete=1
-let g:kite_tab_complete=1
 
 set completeopt-=menu
 set completeopt+=menuone
@@ -149,16 +157,6 @@ let g:netrw_winsize = 25
 map <leader>tn <esc>:tabnext<CR>
 map <leader>tp <esc>:tabprevious<CR>
 map <leader>tt <esc>:tabnew<CR>
-
-"easier moving of code blocks
-vnoremap < <gv " better indentation
-vnoremap > >gv " better indentation
-
-inoremap ( ()<ESC>hli
-inoremap { {}<ESC>hli
-inoremap [ []<ESC>hli
-inoremap " ""<ESC>hli
-inoremap ' ''<ESC>hli
 
 nnoremap <leader>w :w<cr>
 nnoremap <leader>wq :wq<cr>
@@ -276,3 +274,16 @@ function! s:check_back_space() abort
 endfunction
 
 let g:coc_snippet_next = '<tab>'
+" open new split panes to right and below
+set splitright
+set splitbelow
+" turn terminal to normal mode with escape
+tnoremap <Esc> <C-\><C-n>
+" start terminal in insert mode
+au BufEnter * if &buftype == 'terminal' | :startinsert | endif
+" open terminal on ctrl+n
+function! OpenTerminal()
+  split term://bash
+  resize 10
+endfunction
+nnoremap <c-n> :call OpenTerminal()<CR>
