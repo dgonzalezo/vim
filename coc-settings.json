@@ -1,0 +1,43 @@
+{
+  "suggest.echodocSupport": true,
+  "python.jediEnabled": false,
+  "suggest.maxCompleteItemCount": 20,
+  "html.autoClosingTags": true,
+  "html.validate.html": true,
+  "html.suggest.ionic": true,
+  "html.suggest.html5": true,
+  "html.filetypes": ["html", "handlebars", "htmldjango"],
+  "coc.preferences.formatOnSaveFiletypes": [
+    "python",
+    "javascript",
+    "typescript",
+    "typescriptreact",
+    "json",
+    "javascriptreact",
+    "typescript.tsx",
+    "html"
+  ],
+  "diagnostic.errorSign": "✘ ",
+  "diagnostic.warningSign": " ",
+  "diagnostic.infoSign": " ",
+  "eslint.filetypes": [
+    "javascript",
+    "typescript",
+    "typescriptreact",
+    "javascriptreact",
+    "typescript.tsx"
+  ],
+  "coc.preferences.diagnostic.virtualText": true,
+  "zi.enable": true,
+  "zi.patterns": {
+    "": [],
+    "javascript": ["^\\s*\\/\\/", "^\\s*\\/\\*", "^\\s*\\*"],
+    "typescript": ["^\\s*\\/\\/", "^\\s*\\/\\*", "^\\s*\\*"],
+    "markdown": [],
+    "vim": ["^\\s*\\\""],
+    "gitcommit": []
+  },
+  "snippets.extends": {
+  "javascript": ["typescript"]
+  }
+}
