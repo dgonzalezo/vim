@@ -41,13 +41,12 @@ highlight ColorColumn ctermbg=0 guibg=lightgrey
 call plug#begin('~/.config/nvim/plugged')
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'tweekmonster/gofmt.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-utils/vim-man'
 Plug 'mbbill/undotree'
 Plug 'sheerun/vim-polyglot'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+"Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+"Plug 'junegunn/fzf.vim'
 Plug 'stsewd/fzf-checkout.vim'
 Plug 'vuciv/vim-bujo'
 Plug 'tpope/vim-dispatch'
@@ -71,6 +70,16 @@ Plug 'kevinhwang91/rnvimr', {'do': 'make sync'}
 Plug 'mhinz/vim-startify'
 Plug 'metakirby5/codi.vim'
 
+"telescope
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzy-native.nvim'
+
+Plug 'pangloss/vim-javascript'    " JavaScript support
+Plug 'leafgarland/typescript-vim' " TypeScript syntax
+Plug 'maxmellon/vim-jsx-pretty'   " JS and JSX syntax
+Plug 'jparise/vim-graphql'        " GraphQL syntax
 call plug#end()
 
 let mapleader = " "
@@ -80,6 +89,11 @@ source $HOME/.config/nvim/plug-config/rnvimr.vim
 source $HOME/.config/nvim/plug-config/airline.vim
 source $HOME/.config/nvim/plug-config/start-screen.vim
 source $HOME/.config/nvim/plug-config/codiconfig.vim
+source $HOME/.config/nvim/plug-config/tsserver.vim
+source $HOME/.config/nvim/plug-config/fugitive.vim
+source $HOME/.config/nvim/plug-config/telescopeconfig.vim
+luafile $HOME/.config/nvim/plug-config/telescope.lua
+
 
 let g:gruvbox_contrast_dark = 'hard'
 if exists('+termguicolors')
@@ -101,41 +115,26 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 colorscheme gruvbox
 set background=dark
 
-let g:fzf_layout = {'window': { 'width':0.8, 'height':0.8}}
-let $FZF_DEFAULT_OPTS='--reverse'
-let g:fzf_branch_actions = {
-      \ 'rebase': {
-      \   'prompt': 'Rebase> ',
-      \   'execute': 'echo system("{git} rebase {branch}")',
-      \   'multiple': v:false,
-      \   'keymap': 'ctrl-r',
-      \   'required': ['branch'],
-      \   'confirm': v:false,
-      \ },
-      \ 'track': {
-      \   'prompt': 'Track> ',
-      \   'execute': 'echo system("{git} checkout --track {branch}")',
-      \   'multiple': v:false,
-      \   'keymap': 'ctrl-t',
-      \   'required': ['branch'],
-      \   'confirm': v:false,
-      \ },
-      \}
-nnoremap <leader>gb :GBranches<CR>
-nnoremap <leader>cc :Gcommit<CR>
-nnoremap <leader>ga :Git fetch --all<CR>
-nnoremap <leader>grum :Git rebase upstream/master<CR>
-nnoremap <leader>grom :Git rebase origin/master<CR>
-nnoremap <leader>ghw :h <C-R>=expand("<cword>")<CR><CR>
-"kite
-
-set completeopt-=menu
-set completeopt+=menuone
-set completeopt-=longest
-set completeopt-=preview
-set completeopt+=noinsert
-set completeopt-=noselect
-
+"let g:fzf_layout = {'window': { 'width':0.8, 'height':0.8}}
+"let $FZF_DEFAULT_OPTS='--reverse'
+"let g:fzf_branch_actions = {
+"      \ 'rebase': {
+"      \   'prompt': 'Rebase> ',
+"      \   'execute': 'echo system("{git} rebase {branch}")',
+"      \   'multiple': v:false,
+"      \   'keymap': 'ctrl-r',
+"      \   'required': ['branch'],
+"      \   'confirm': v:false,
+"      \ },
+"      \ 'track': {
+"      \   'prompt': 'Track> ',
+"      \   'execute': 'echo system("{git} checkout --track {branch}")',
+"      \   'multiple': v:false,
+"      \   'keymap': 'ctrl-t',
+"      \   'required': ['branch'],
+"      \   'confirm': v:false,
+"      \ },
+"      \}
 
 if executable('rg')
     let g:rg_derive_root='true'
@@ -151,6 +150,7 @@ let g:netrw_winsize = 25
 map <leader>tn <esc>:tabnext<CR>
 map <leader>tp <esc>:tabprevious<CR>
 map <leader>tt <esc>:tabnew<CR>
+map <leader>tc <esc>:tabclose<CR>
 nnoremap <leader>m :MaximizerToggle!<CR>
 
 fun GotoWindow(id)
@@ -167,17 +167,12 @@ nnoremap <leader>wq :wq<cr>
 nnoremap <leader>q :q<cr>
 nnoremap <leader>T :Todo<cr>
 nnoremap <leader>prw :CocSearch <C-R>=expand("<cword>")<CR><CR>
-nnoremap <leader>pw :Rg <C-R>=expand("<cword>")<CR><CR>
-nnoremap <leader>phw :h <C-R>=expand("<cword>")<CR><CR>
 nnoremap <leader>h :wincmd h<CR>
 nnoremap <leader>j :wincmd j<CR>
 nnoremap <leader>k :wincmd k<CR>
 nnoremap <leader>l :wincmd l<CR>
 nnoremap <leader>u :UndotreeShow<CR>
 nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
-nnoremap <Leader>ps :Rg<SPACE>
-nnoremap <C-p> :GFiles<CR>
-nnoremap <Leader>pf :Files<CR>
 nnoremap <Leader><CR> :so ~/.config/nvim/init.vim<CR>
 nnoremap <Leader>+ :vertical resize +5<CR>
 nnoremap <Leader>- :vertical resize -5<CR>
@@ -185,7 +180,6 @@ nnoremap <Leader>rp :resize 100<CR>
 nnoremap <Leader>ee oif err != nil {<CR>log.Fatalf("%+v\n", err)<CR>}<CR><esc>kkI<esc>
 vnoremap K :m '<-2<CR>gv=gv
 vnoremap J :m '>+1<CR>gv=gv
-
 " vim TODO
 nmap <Leader>tr <Plug>BujoChecknormal
 nmap <Leader>th <Plug>BujoAddnormal
@@ -219,9 +213,11 @@ nmap <silent> <leader>gp <Plug>(coc-diagnostic-prev-error)
 nmap <silent> <leader>gn <Plug>(coc-diagnostic-next-error)
 nnoremap <leader>cr :CocRestart
 noremap <leader>P :Prettier<cr>
+vmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
-
+nnoremap <leader>phw :h <C-R>=expand("<cword>")<CR><CR>
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
@@ -239,11 +235,6 @@ nnoremap <leader>bn :bnext<cr>
 nnoremap <leader>bd :bdelete<cr>
 nnoremap <leader>Bf :bfirst<cr>
 nnoremap <leader>Bl :blast<cr>
-nnoremap <leader>bl :Buffers<cr>
-" Sweet Sweet FuGITive
-nmap <leader>gj :diffget //3<CR>
-nmap <leader>gf :diffget //2<CR>
-nmap <leader>gs :G<CR>
 
 fun! TrimWhitespace()
     let l:save = winsaveview()
