@@ -47,7 +47,7 @@ Plug 'mbbill/undotree'
 Plug 'sheerun/vim-polyglot'
 "Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 "Plug 'junegunn/fzf.vim'
-Plug 'stsewd/fzf-checkout.vim'
+"Plug 'stsewd/fzf-checkout.vim'
 Plug 'vuciv/vim-bujo'
 Plug 'tpope/vim-dispatch'
 Plug 'preservim/nerdtree'
