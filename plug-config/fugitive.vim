@@ -2,7 +2,7 @@
 nmap <leader>gj :diffget //3<CR>
 nmap <leader>gf :diffget //2<CR>
 nmap <leader>gs :G<CR>
-nnoremap <leader>cc :Gcommit<CR>
+nnoremap <leader>gc :Gcommit<CR>
 "nnoremap <leader>gb :GBranches<CR>
 "nnoremap <leader>ga :Git fetch --all<CR>
 "nnoremap <leader>grum :Git rebase upstream/master<CR>

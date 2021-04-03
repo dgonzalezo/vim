@@ -6,7 +6,7 @@
   "html.validate.html": true,
   "html.suggest.ionic": true,
   "html.suggest.html5": true,
-  "html.filetypes": ["html", "handlebars", "htmldjango"],
+  "html.filetypes": ["html", "handlebars", "htmldjango", "javascript"],
   "coc.preferences.formatOnSaveFiletypes": [
     "python",
     "javascript",
@@ -38,6 +38,7 @@
     "gitcommit": []
   },
   "snippets.extends": {
-  "javascript": ["typescript"]
-  }
+    "javascript": ["typescript"]
+  },
+  "emmet.includeLanguages": { "javascript": "html" }
 }

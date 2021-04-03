@@ -1,6 +1,8 @@
 
 syntax on
-
+"set nocompatible
+"filetype off
+filetype plugin on
 set guicursor=
 set relativenumber
 set nohlsearch
@@ -80,8 +82,12 @@ Plug 'pangloss/vim-javascript'    " JavaScript support
 Plug 'leafgarland/typescript-vim' " TypeScript syntax
 Plug 'maxmellon/vim-jsx-pretty'   " JS and JSX syntax
 Plug 'jparise/vim-graphql'        " GraphQL syntax
-call plug#end()
 
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'preservim/nerdcommenter'
+"Plug 'mxw/vim-jsx'
+call plug#end()
+"let g:jsx_ext_required = 0
 let mapleader = " "
 "source files
 source $HOME/.config/nvim/plug-config/floaterm.vim
@@ -93,6 +99,9 @@ source $HOME/.config/nvim/plug-config/tsserver.vim
 source $HOME/.config/nvim/plug-config/fugitive.vim
 source $HOME/.config/nvim/plug-config/telescopeconfig.vim
 luafile $HOME/.config/nvim/plug-config/telescope.lua
+source $HOME/.config/nvim/plug-config/vim-jsx.vim
+luafile $HOME/.config/nvim/plug-config/treesitter.lua
+source $HOME/.config/nvim/plug-config/nerdCommenter.vim
 
 
 let g:gruvbox_contrast_dark = 'hard'
