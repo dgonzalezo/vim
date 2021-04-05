@@ -7,7 +7,12 @@ let g:startify_custom_header = [
         \]
 
 let g:startify_session_dir = '~/.config/nvim/session'
-
+    autocmd VimEnter *
+                \   if !argc()
+                \ |   Startify
+                \ |   NERDTree
+                \ |   wincmd w
+                \ | endif
 
 let g:startify_lists = [
           \ { 'type': 'files',     'header': ['   Files']                        },
