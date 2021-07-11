@@ -84,8 +84,11 @@ Plug 'maxmellon/vim-jsx-pretty'   " JS and JSX syntax
 Plug 'jparise/vim-graphql'        " GraphQL syntax
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/playground'
+
 Plug 'preservim/nerdcommenter'
 "Plug 'mxw/vim-jsx'
+" Plug 'dart-lang/dart-vim-plugin'
 call plug#end()
 "let g:jsx_ext_required = 0
 let mapleader = " "
@@ -102,7 +105,6 @@ luafile $HOME/.config/nvim/plug-config/telescope.lua
 source $HOME/.config/nvim/plug-config/vim-jsx.vim
 luafile $HOME/.config/nvim/plug-config/treesitter.lua
 source $HOME/.config/nvim/plug-config/nerdCommenter.vim
-
 
 let g:gruvbox_contrast_dark = 'hard'
 if exists('+termguicolors')

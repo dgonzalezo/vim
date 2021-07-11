@@ -7,6 +7,13 @@
   "html.suggest.ionic": true,
   "html.suggest.html5": true,
   "html.filetypes": ["html", "handlebars", "htmldjango", "javascript"],
+  "java.configuration.runtimes": [
+    {
+      "name": "JavaSE-11",
+      "path": "/usr/lib/jvm/java-11-openjdk-amd64",
+      "default": true
+    }
+  ],
   "coc.preferences.formatOnSaveFiletypes": [
     "python",
     "javascript",
